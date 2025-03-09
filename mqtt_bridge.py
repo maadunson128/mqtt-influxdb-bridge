@@ -6,6 +6,36 @@ from datetime import datetime
 from influxdb_client import InfluxDBClient, Point
 from influxdb_client.client.write_api import SYNCHRONOUS
 import os
+from http.server import HTTPServer, BaseHTTPRequestHandler
+
+
+# Simple HTTP server to respond to Render's health checks
+class HealthCheckHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
+        self.wfile.write(b'MQTT Bridge is running')
+        
+    def log_message(self, format, *args):
+        # Suppress logs from HTTP requests to avoid cluttering the console
+        return
+
+# Start a simple web server for health checks
+def start_health_server():
+    port = int(os.environ.get('PORT', 8080))  # Render assigns a PORT env variable
+    server = HTTPServer(('0.0.0.0', port), HealthCheckHandler)
+    print(f"Starting health check server on port {port}")
+    server.serve_forever()
+
+# Start the health check server in a separate thread
+health_thread = threading.Thread(target=start_health_server, daemon=True)
+health_thread.start()
+
+# Your existing MQTT code continues below...
+
+
+
 
 # Get configuration from environment variables with fallbacks to local config
 try:
