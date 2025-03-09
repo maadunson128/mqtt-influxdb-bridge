@@ -8,7 +8,7 @@ from datetime import datetime
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from influxdb_client import InfluxDBClient, Point
 from influxdb_client.client.write_api import SYNCHRONOUS
-from config import *
+#from config import *
 
 # ===== Environment Variables =====
 # Use environment variables with fallbacks for local development
