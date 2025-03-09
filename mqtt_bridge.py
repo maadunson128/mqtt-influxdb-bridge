@@ -12,14 +12,14 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 
 # ===== Environment Variables =====
 # Use environment variables with fallbacks for local development
-mqtt_broker = os.environ.get("MQTT_BROKER", MQTT_BROKER)
-mqtt_port = int(os.environ.get("MQTT_PORT", MQTT_PORT))
-mqtt_username = os.environ.get("MQTT_USERNAME", MQTT_USERNAME)
-mqtt_password = os.environ.get("MQTT_PASSWORD", MQTT_PASSWORD)
-influx_url = os.environ.get("INFLUX_URL", INFLUX_URL)
-influx_token = os.environ.get("INFLUX_TOKEN", INFLUX_TOKEN)
-influx_org = os.environ.get("INFLUX_ORG", INFLUX_ORG)
-influx_bucket = os.environ.get("INFLUX_BUCKET", INFLUX_BUCKET)
+mqtt_broker = os.environ.get("MQTT_BROKER")
+mqtt_port = int(os.environ.get("MQTT_PORT"))
+mqtt_username = os.environ.get("MQTT_USERNAME")
+mqtt_password = os.environ.get("MQTT_PASSWORD")
+influx_url = os.environ.get("INFLUX_URL")
+influx_token = os.environ.get("INFLUX_TOKEN")
+influx_org = os.environ.get("INFLUX_ORG")
+influx_bucket = os.environ.get("INFLUX_BUCKET")
 
 # ===== HTTP Server for Render =====
 class HealthCheckHandler(BaseHTTPRequestHandler):
