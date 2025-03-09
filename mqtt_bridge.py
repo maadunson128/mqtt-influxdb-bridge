@@ -193,28 +193,7 @@ def heartbeat_check():
         # Sleep until next heartbeat
         time.sleep(HEARTBEAT_INTERVAL)
 
-def watchdog_timer():
-    """Function to detect and recover from extended periods without connection"""
-    global last_successful_connection
-    
-    while True:
-        time.sleep(120)  # Check every 2 minutes
-        now = time.time()
-        if now - last_successful_connection > 300:  # 5 minutes without connection
-            print("WATCHDOG ALERT: No successful connection for over 5 minutes, forcing reconnect")
-            # Force a full reconnection
-            try:
-                client.disconnect()
-            except:
-                pass  # Ignore errors during forced disconnect
-            
-            time.sleep(2)  # Brief pause
-            
-            try:
-                print("Watchdog initiating fresh connection...")
-                client.connect(mqtt_broker, mqtt_port, keepalive=120)
-            except Exception as e:
-                print(f"Watchdog reconnect failed: {e}")
+
 
 def dns_check():
     """Periodically verify DNS resolution of the MQTT broker"""
@@ -342,10 +321,6 @@ try:
     heartbeat_thread.start()
     print(f"Heartbeat monitor started with {HEARTBEAT_INTERVAL} second interval")
     
-    # Start watchdog thread
-    watchdog_thread = threading.Thread(target=watchdog_timer, daemon=True)
-    watchdog_thread.start()
-    print("Watchdog timer started")
     
     # Start DNS check thread
     dns_thread = threading.Thread(target=dns_check, daemon=True)
