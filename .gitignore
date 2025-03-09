@@ -1,0 +1,11 @@
+# .gitignore
+
+# Ignore real configuration file with credentials
+config.py
+
+# Other common files to ignore
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
